@@ -1,4 +1,5 @@
 import streamlit as st
+from graphics.display import display
 
 # Sidebar content
 st.sidebar.title("Picross")
@@ -20,7 +21,8 @@ show_crossouts = st.sidebar.checkbox("Show crossouts", value=True)
 grid_options = {
     "5x5": 5,
     "10x10": 10,
-    "15x15": 15
+    "15x15": 15,
+    "32x32": 32
 }
 
 # Select grid size
@@ -35,4 +37,6 @@ if st.sidebar.button("New Game"):
 
 # Main content
 st.title("Picross Game")
+bools = [[False for _ in range(dim)] for _ in range(dim)]
+display(dim, bools)
 

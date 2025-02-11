@@ -4,17 +4,19 @@ from PIL import Image
 from io import BytesIO
 
 def random_pokemon():
-    with open('pokemon_data.txt', 'r') as file:
+    with open('graphics/pictures/pokemon_data.txt', 'r') as file:
         lines = file.readlines()
         return random.choice(lines).strip()
 
 def get_random_picture(w, h):
-    url = f"https://raw.githubusercontent.com/rh-hideout/pokeemerald-expansion/refs/heads/master/graphics/pokemon/{random_pokemon()}/icon.png"
+    pokemon = random_pokemon()
+    url = f"https://raw.githubusercontent.com/rh-hideout/pokeemerald-expansion/refs/heads/master/graphics/pokemon/{pokemon}/icon.png"
     response = requests.get(url, timeout=10)
     response.raise_for_status() 
     img = Image.open(BytesIO(response.content))
 
     # Resize image
+    img = img.crop((0, 0, 32, 32))
     resized_img = img.resize((w, h), Image.Resampling.LANCZOS)
     resized_img = resized_img.convert("RGB")
 
@@ -28,6 +30,6 @@ def get_random_picture(w, h):
         pixel_data_hex_list.append(row_hex)
 
     transparency = pixel_data_hex_list[0][0]
-    return [[pixel if pixel != transparency else 0 for pixel in row] for row in pixel_data_hex_list]
+    return ([[pixel if pixel != transparency else '#ffffff' for pixel in row] for row in pixel_data_hex_list], pokemon)
 
 
