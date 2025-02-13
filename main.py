@@ -40,3 +40,5 @@ st.title("Picross Game")
 bools = [[False for _ in range(dim)] for _ in range(dim)]
 display(dim, bools)
 
+
+    
