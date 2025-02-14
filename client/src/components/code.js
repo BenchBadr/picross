@@ -9,7 +9,6 @@ import './code.css';
 export const CodeBlock = ({ language, code, count=0 }) => {
     const { theme } = useContext(ThemeContext);
     const [isCopied, setIsCopied] = useState(false);
-    const l = 0;
     const canRun = ['py', 'python'].includes(language);
     const pythonValue = useContext(PythonContext);
     const { runPythonFunc, isLoading, isRunning, isReady, output, num, setNum, outputErr, stderr, stdout } = pythonValue || [null, null, null, null, null, null, null]
@@ -73,13 +72,11 @@ export const CodeBlock = ({ language, code, count=0 }) => {
     <>
       {!code ? 
         <code className={`inline-code ${theme}`} style={{ color: 'grey' }}>{code}</code> : (
-        <div style={{ position: 'relative'}} className="block-code-parent">
+        <div className="block-code-parent">
           <div className={`copy-btn`} id='#to-hid'>
               <div>
-                {!isCopied ? <span className="copy-icon" onClick={handleCopy}></span> : <div className='tooltip'>
-                <a className='tooltip-text small flip' style={{ boxShadow: 'none', fontSize: '65%' }}>{["copied!", "copié !", "¡copiado!"][l]}</a>
-                <span className="material-icons" style={{ color: 'green' }}>done</span> 
-              </div>}
+                {!isCopied ? <div style={{userSelect:'none',cursor:'pointer',color:'grey'}} onClick={handleCopy}><a className='material-icons'>content_copy</a></div>: 
+                <span className="material-icons" style={{ color: 'green' }}>done</span> }
                 {canRun && !(code.includes('while 1')) && !(code.includes('while True')) ? (
                   isReady ? 
                   <div className={`run-btn ${isRunning && num===count ? 'blink' : ''}`}>
@@ -92,10 +89,10 @@ export const CodeBlock = ({ language, code, count=0 }) => {
           <Highlighter codeBlock={code} language={language} lines={1} code={codeContent} setCode={setCodeContent} />
           {canRun && isReady ?
             <div className={`code-output auto-height ${fullscreen ? 'infull' : ''}`}>
-              {out[0]}
+              {out[0].split('\n').map((line, i) => (<>{line}<br/></>))}
               <br></br>
               <a style={{ color: 'var(--red)' }}>
-                {out[1]}
+              {out[1].split('\n').map((line, i) => (<>{line}<br/></>))}
               </a>
             </div>
             : null}
