@@ -12,9 +12,11 @@ const App = () => {
 
   return (
     <ThemeProvider>
+       <GameProvider>
     <SidebarProvider>
      <MainContent />
     </SidebarProvider>
+    </GameProvider>
   </ThemeProvider>
   );
 };
@@ -26,7 +28,6 @@ const MainContent = () => {
     <div className={`app ${theme}`}>
       <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <h1>Picross</h1>
-        <GameProvider>
         <Accordion title={'Use Game solver'} id={1}>
 
         <h2>Game Solver</h2>
@@ -36,7 +37,6 @@ const MainContent = () => {
         ></CodeBlock>
         </PythonWrapper>
         </Accordion>
-        </GameProvider>
       </div>
     </div>
   )

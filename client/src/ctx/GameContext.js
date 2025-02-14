@@ -15,7 +15,7 @@ export const GameProvider = ({ children }) => {
 
 
     return (
-        <GameContext.Provider value={{ solver, setSolver, setData, setGridDim, setBools, setMistakes }}>
+        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, setMistakes }}>
             {children}
         </GameContext.Provider>
     );

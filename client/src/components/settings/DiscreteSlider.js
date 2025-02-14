@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Slider } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useGameContext } from '../../ctx/GameContext';
 
 const marks = [
   {
@@ -27,37 +29,35 @@ const getValue = (value) => {
   return closestMark.value;
 };
 
-const getValueIndex = (value) => {
-    return marks.findIndex(mark => mark.value === value);
-};
-
-const valueToIndex = (value) => {
-    return marks.findIndex(mark => mark.value === value);
-};
-
-const indexToValue = (index) => {
-    return marks[index].value;
-};
+const StyledSlider = styled(Slider)(({ theme }) => ({
+    '& .MuiSlider-markLabel': { 
+      color: 'currentColor', 
+    },
+  }));
+  
 
 
 function DiscreteSlider() {
-  const [value, setValue] = React.useState(10); 
+  const { gridDim, setGridDim } = useGameContext(); 
 
   const handleChange = (event, newValue) => {
-    setValue(getValue(newValue));
+    setGridDim(getValue(newValue));
   };
 
   return (
-    <Slider
-      value={value}
+    <div style={{padding: '0 20px'}}>
+    <a>Grid Size</a>
+    <StyledSlider
+      value={gridDim}
       onChange={handleChange}
       min={5}
       max={30}
       step={null} 
       marks={marks}
       valueLabelDisplay="auto"
-      getAriaValueText={(value) => `${value}`}
+      getAriaValueText={(gridDim) => `${gridDim}`}
     />
+    </div>
   );
 }
 
