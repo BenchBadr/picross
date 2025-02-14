@@ -61,16 +61,9 @@
     transition-duration: 0.1s;
 }
 
-.tab input:checked ~ .tab__label .material-icons-round {
-    transform:rotate(-90deg)
-}
+
 
 .tab__label .material-icons{
     transition-duration: 0.1s;
-}
-  
-
-.tab input:checked ~ .tab__label .material-icons {
-    transform:rotate(-90deg)
 }
   

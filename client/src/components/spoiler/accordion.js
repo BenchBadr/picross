@@ -1,12 +1,13 @@
 import { useState } from "react";
 import './accordion.css';
+import { useGameContext } from "../../ctx/GameContext";
 
 const Accordion = ({ children, id, title, custom=null }) => {
-    const [isChecked, setIsChecked] = useState(false);
+    const {solver, setSolver} = useGameContext();
 
   
     const handleCheckboxChange = () => {
-      setIsChecked(!isChecked);
+      setSolver(!solver);
     };
     
     const special = ['tips','info','warn','check'];
@@ -24,14 +25,14 @@ const Accordion = ({ children, id, title, custom=null }) => {
             type="checkbox" 
             name={`accordion-${id}`}
             id={`cb${id}`} 
-            checked={isChecked} 
+            checked={solver} 
             onChange={handleCheckboxChange}
           />
           <label htmlFor={`cb${id}`} className="tab__label reset" style={{background:custom ? 'none' : 'current', color:custom ? custom : 'current'}}>
             {title}
             <div>
-              {isChecked}
-              <a className='material-icons'>expand_more</a>
+              {solver}
+              <a className='material-icons'>{solver ? 'toggle_on' : 'toggle_off'}</a>
             </div>
           </label>
           <div className="tab__content">

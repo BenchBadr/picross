@@ -209,7 +209,7 @@ color:white;
 }
 
 
-.code-output.infull{
+.code-output.infull, .app.dark .code-output.infull{
   position:fixed;
   top:0;
   left:0;
@@ -333,16 +333,16 @@ code{
   background:var(--dark-low);
 }
 
-.code-output::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 0px; 
   height: 0px; 
 }
 
-.code-output::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent; 
 }
 
-.code-output::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: transparent;
 }
 .code-output {
