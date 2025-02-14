@@ -7,10 +7,12 @@ st.sidebar.title("Picross")
 # Sidebar
 st.sidebar.markdown('---')
 st.sidebar.markdown("## Game")
-progress = 35 
-mistakes = 2   
-st.sidebar.markdown(f"- Progress: \n > {progress}%")
-st.sidebar.markdown(f"- Mistakes: \n > {mistakes}")    
+
+st.session_state.progress = 0
+st.session_state.mistakes = 0   
+
+st.sidebar.markdown(f"- Progress: \n > {st.session_state.progress}%")
+st.sidebar.markdown(f"- Mistakes: \n > {st.session_state.mistakes}")    
 st.sidebar.markdown('---')
 
 # Settings Section
@@ -31,7 +33,7 @@ dim = grid_options[grid_size_label]
 st.sidebar.markdown('---')
 
 # New Game Button
-if st.sidebar.button("New Game"):
+if st.sidebar.button("New Game", type='primary'):
     st.sidebar.success("Starting a new game!") 
     st.rerun()
 

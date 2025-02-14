@@ -23,45 +23,66 @@ from streamlit.components.v1 import html
 
 
 def display(dim, bools):
-    if 'data' not in st.session_state:
-        st.session_state.data, st.session_state.pokemon = get_random_picture(dim, dim)
-    if 'grid_state' not in st.session_state:
-        st.session_state.grid_state = [[False for _ in range(dim)] for _ in range(dim)]
-
-    st.markdown(f"**Pokémon to draw**: {st.session_state.pokemon.capitalize()}")
+    data, pokemon = get_random_picture(dim, dim)
+    st.markdown(f"**Pokémon to draw**: {pokemon.capitalize()}")
     size = '20px'
-    grid_settings = f"display: grid;grid-template-columns: repeat({dim+1}, 20px);gap: 0;"
-    
-    html_content = f'''
-    <div class="grid-container" style="{grid_settings}">
-    '''
-    for row in range(dim):
-        html_content += f'<a style="width: {size}; height: {size};">{row}</a>\n'
-        for col in range(dim):
-            color = 'black' if st.session_state.grid_state[row][col] else 'white'
-            html_content += f'<a id="cell-{row}-{col}" onclick="toggleCell({row}, {col})" style="background-color: {color}; border: 1px solid black; width: {size}; height: {size};"></a>\n'
-    html_content += '</div>'
 
-    html_content += '''
-    <script>
-    function toggleCell(row, col) {
-        const cell = document.getElementById(`cell-${row}-${col}`);
-        const currentColor = cell.style.backgroundColor;
-        const newColor = currentColor === 'white' ? 'black' : 'white';
-        cell.style.backgroundColor = newColor;
-        window.parent.postMessage({
-            type: 'streamlit:setComponentValue',
-            value: {row: row, col: col, color: newColor}
-        }, '*');
-    }
-    </script>
-    '''
+    # Apply the custom CSS
+    st.markdown(f"""
+    <style>
+        .grid-container {{
+            display: grid; 
+            grid-template-columns: repeat({dim+1}, 20px); 
+            gap: 0;
+            background:blue;
+        }}
 
-    html(html_content, height=(dim+1)*25)
 
-    # Handle the message from JavaScript
-    if 'componentValue' in st.session_state:
-        value = st.session_state.componentValue
-        st.session_state.grid_state[value['row']][value['col']] = (value['color'] == 'black')
-        del st.session_state.componentValue
-        st.experimental_rerun()
+        div.stButton > button[kind="secondary"]:first-child {{
+            background-color: rgb(204, 49, 49);
+            border-radius:0;
+            aspect-ratio: 1; 
+            width:100%;
+
+        }}
+
+        div.stButton > button[kind="tertiary"]:first-child  {{
+            background:transparent;
+            border-radius:0;
+            aspect-ratio: 1; 
+            width:100%;
+        }}
+
+
+        .stHorizontalBlock {{
+            gap:0;
+        }}
+
+        .stColumn .stVerticalBlock {{
+            gap:0;
+        }}
+    </style>
+    """, unsafe_allow_html=True)
+
+    if "coords" not in st.session_state:
+        st.session_state.coords = None
+
+    coords = st.session_state.get("coords", None)
+    columns = st.columns(dim + 1) 
+
+
+
+    for j in range(dim + 1):
+        for i in range(dim + 1): 
+            with columns[i]:
+                if i == 0 and j == 0:
+                    st.button("", type='tertiary', key=f"btn-{i}-{j}")
+                elif i == 0: 
+                    st.button(f"{str(j)}", type='tertiary', key=f"btn-{i}-{j}") 
+                elif j == 0:
+                    st.button(f"{str(i)}", type='tertiary', key=f"btn-{i}-{j}") 
+                else:
+                    st.button(f"", type='secondary', key=f"btn-{i}-{j}")
+               
+                
+    st.markdown(f'Clicked `{coords}`')
