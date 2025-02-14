@@ -1,13 +1,17 @@
 :root {
   --light-bg: #fff;
   --light-text: #333;
-  --light-sidebar: #91abd77c;
+  --light-sidebar: #91abd7b0;
   --light-scrollbar-thumb: rgba(0, 0, 0, 0.2); 
   --light-scrollbar-track: rgba(0, 0, 0, 0.1); 
 
-  --dark-bg: #0f1116;
-  --dark-sidebar: #26272f;
+  --dark-sidebar: #26272f71;
   --dark-text: #eee;
+
+  --background-root:#0E1525; 
+  /* --dark-bg:#2B3245;  */
+  --dark-bg:#3C445C; 
+  --light-bg:rgb(195, 211, 255); 
 }
 
 .app.light, html:has(.app.light) {
@@ -139,6 +143,16 @@ html:has(.app.dark) .burger{
   .sidebar.open{
     transform:translateX(0);
   }
+
+  .burger{
+    bottom:20px;
+    top:auto;
+  }
+
+  .bottom-box{
+    bottom:auto;
+    top:20px;
+  }
 }
 
 @media (min-width:768px){
@@ -158,3 +172,4 @@ html:has(.app.dark) .burger{
     margin-left:100px;
   }
 }
+
