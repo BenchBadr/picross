@@ -24,15 +24,20 @@ const Sidebar = () => {
     const { isSidebarOpen, toggleSidebar } = useContext(SidebarContext);
   
     return (
+        <> 
+        <div onClick={toggleSidebar} className={`burger ${isSidebarOpen ? 'active' : ''}`}>
+        <div></div>
+        <div></div>
+        <div></div>
+        </div>
       <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className='sidebar-content'>
-            <div style={{background:'red',color:'white',padding:'10px'}}
-            onClick={toggleTheme}>test</div>
             <div className='bottom-box'>
-                Hello
+            <div onClick={toggleTheme} className='theme-toggle'><a className='material-icons'>{theme!=='light' ? 'light_mode' : 'dark_mode'}</a></div>
             </div>
         </div>
       </aside>
+      </>
     );
 };  
 
