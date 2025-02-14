@@ -1,7 +1,7 @@
 :root {
   --light-bg: #fff;
   --light-text: #333;
-  --light-sidebar: #91abd7;
+  --light-sidebar: #91abd77c;
   --light-scrollbar-thumb: rgba(0, 0, 0, 0.2); 
   --light-scrollbar-track: rgba(0, 0, 0, 0.1); 
 
@@ -25,7 +25,7 @@
 .main-content {
   flex: 1;
   padding: 20px;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.2s ease;
 }
 
 .sidebar {
@@ -34,13 +34,21 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 250px;
+  width: 15vw;
   background-color: inherit;
   padding: 20px;
   transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.1s ease-in-out;
   z-index: 1000;
   background:var(--light-sidebar);
+  backdrop-filter: blur(10px);
+}
+
+
+@media (max-width:768px){
+  .sidebar{
+    width:calc(100% - 40px) !important;
+  }
 }
 
 html:has(.app.dark) .sidebar {
@@ -100,6 +108,13 @@ html:has(.app.dark) .sidebar {
   left:20px;
   transform:scale(0.7);
   z-index: 3333;
+  background:var(--light-sidebar);
+  padding:20px;
+  border-radius: 50%;
+}
+
+html:has(.app.dark) .burger{
+  background:var(--dark-sidebar);
 }
 
 .burger > div {
@@ -133,5 +148,13 @@ html:has(.app.dark) .sidebar {
 
   .sidebar.open{
     transform:translateX(-100%);
+  }
+
+  html:has(.sidebar) .main-content{
+    margin-left:calc(15vw + 50px);
+  }
+
+  html:has(.sidebar.open) .main-content{
+    margin-left:100px;
   }
 }
