@@ -10,7 +10,7 @@ async function getRandomPokemon() {
   return lines[Math.floor(Math.random() * lines.length)].trim();
 }
 
-async function getRandomPicture(w, h) {
+async function getRandomPicture(dim) {
   const pokemon = await getRandomPokemon();
   const url = `https://raw.githubusercontent.com/rh-hideout/pokeemerald-expansion/refs/heads/master/graphics/pokemon/${pokemon}/icon.png`;
 
@@ -19,7 +19,7 @@ async function getRandomPicture(w, h) {
     if (!response.ok) {
         if (response.status === 404) {
             console.error(`Pokemon ${pokemon} not found. Trying another one...`);
-            return getRandomPicture(w, h);
+            return getRandomPicture(dim);
         }
         throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -28,17 +28,17 @@ async function getRandomPicture(w, h) {
     const image = await createImageBitmap(blob); 
 
     const canvas = document.createElement('canvas');
-    canvas.width = w;
-    canvas.height = h;
+    canvas.width = dim;
+    canvas.height = dim;
     const ctx = canvas.getContext('2d');
 
     ctx.imageSmoothingEnabled = false; 
-    ctx.drawImage(image, 0, 0, 32, 32, 0, 0, w, h);
+    ctx.drawImage(image, 0, 0, 32, 32, 0, 0, dim, dim);
 
     const pixelDataHexList = [];
-    for (let y = 0; y < h; y++) {
+    for (let y = 0; y < dim; y++) {
       const rowHex = [];
-      for (let x = 0; x < w; x++) {
+      for (let x = 0; x < dim; x++) {
         const data = ctx.getImageData(x, y, 1, 1).data;
         const hexColor = `#${[...data.slice(0, 3)].map(x => x.toString(16).padStart(2, '0')).join('')}`;
         rowHex.push(hexColor);
@@ -58,30 +58,4 @@ async function getRandomPicture(w, h) {
   }
 }
 
-
-function MyComponent() {
-  const [pixelData, setPixelData] = useState([]);
-  const [pokemonName, setPokemonName] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const [data, pokemon] = await getRandomPicture(32, 32); 
-      setPixelData(data);
-      setPokemonName(pokemon);
-    }
-
-    fetchData();
-  }, []);
-
-  return (
-    <div>
-      {pokemonName && <h2>{pokemonName}</h2>}
-      {pixelData.length > 0 ? (pokemonName
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
-}
-
-export default MyComponent;
+export { getRandomPicture };

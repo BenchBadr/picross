@@ -4,9 +4,9 @@ import ThemeProvider, {ThemeContext} from './ctx/ThemeContext';
 import SidebarProvider, {SidebarContext} from './ctx/SidebarContext';
 import { CodeBlock } from './components/code';
 import { PythonWrapper } from './ctx/PythonContext';
-import MyComponent from './util/pokemon';
 import Accordion from './components/spoiler/accordion';
 import { GameProvider, useGameContext } from './ctx/GameContext';
+import Grid from './util/grid.js'
 
 const App = () => {
 
@@ -37,6 +37,8 @@ const MainContent = () => {
         ></CodeBlock>
         </PythonWrapper>
         </Accordion>
+
+        <Grid/>
       </div>
     </div>
   )
