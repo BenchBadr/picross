@@ -4,7 +4,10 @@
     width:18px;
     border:1px solid grey;
     cursor:pointer;
-    /* transition-duration:.2s; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
 }
 
 
@@ -30,5 +33,6 @@ div.row-container:has(.cell:hover) .cell{
 .fake-cell.i{
     transform:rotate(270deg);
     width:20px;
+
     text-align: start;
 }

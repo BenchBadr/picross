@@ -15,9 +15,13 @@ export const GameProvider = ({ children }) => {
     const [pokemon, setPokemon] = useState(null);
     const [lineData, setLineData] = useState(null);
 
+    const addMistakes = () => {
+        setMistakes(mistakes + 1);
+    }
+
 
     return (
-        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, setMistakes, data, setData, pokemon, setPokemon, lineData, setLineData }}>
+        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, data, setData, pokemon, setPokemon, lineData, setLineData, setBools, bools, addMistakes }}>
             {children}
         </GameContext.Provider>
     );

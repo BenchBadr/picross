@@ -4,7 +4,7 @@ import { getRandomPicture } from "./pokemon";
 import './grid.css';
 
 const Grid = () => {
-    const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData } = useGameContext();
+    const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData, bools, setBools } = useGameContext();
 
     const dumpLineData = (data, base = '#ffffff') => {
         const regions = [];
@@ -58,11 +58,22 @@ const Grid = () => {
             setData(response[0]);
             setPokemon(response[1]);
             setLineData([dumpColumnData(response[0]), dumpLineData(response[0])]);
-            console.log(lineData)
+            setBools(Array.from({ length: gridDim }, () => Array.from({ length: gridDim }, () => 0)))
 
         }
         fetchData();
     }, [gridDim])
+
+    const clickCell = (y, x) => {
+        setBools(prevBools => {
+            return prevBools.map((row, rowIndex) =>
+                rowIndex === y
+                    ? row.map((cell, cellIndex) => (cellIndex === x ? true : cell))
+                    : row
+            );
+        });
+    };
+    
 
 
     return (
@@ -79,7 +90,7 @@ const Grid = () => {
             <div style={{display:'flex'}} key={y} className="row-container">
                 <div className="fake-cell">{lineData[1][y] && lineData[1][y].join(',')}</div>
                 {row.map((pixel, x) => (
-                <div key={x} style={{background:pixel}} className="cell" title={pixel}></div>
+                <div key={x} style={{background:!bools[y][x] ? 'orange' : pixel, color:'red'}} className="cell" title={pixel} onClick={() => clickCell(y,x)}>{bools[y][x] && pixel === '#ffffff' ? 'X' : ''}</div>
                 ))}
             </div>
             ))}
