@@ -350,3 +350,23 @@ code{
 .code-output {
   -ms-overflow-style: none; 
 }
+
+.ghostarea{
+  width:100px;
+  /* height:calc(100% - 20px); */
+  position: absolute;
+  top:0;
+  left:0;
+  outline: none;
+  background:transparent;
+  border:none;
+  color:transparent;
+  caret-color: var(--main);
+  z-index:1;
+  white-space:wrap;
+  margin-left:40px;
+  margin-top:10px;
+  width:100%;
+  overflow-x: scroll;
+  white-space: pre;
+}

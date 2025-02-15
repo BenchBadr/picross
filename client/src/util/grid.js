@@ -81,7 +81,7 @@ const Grid = () => {
             }
             return prevBools.map((row, rowIndex) =>
                 rowIndex === y
-                    ? row.map((cell, cellIndex) => (cellIndex === x ? true : cell))
+                    ? row.map((cell, cellIndex) => (cellIndex === x ? 1 : cell))
                     : row
             );
         });

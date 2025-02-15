@@ -33,7 +33,7 @@ const MainContent = () => {
         <h2>Game Solver</h2>
 
         <PythonWrapper>
-        <CodeBlock language={`python`} code={`import time\nfor i in range(10):\n  print(i)\n  time.sleep(1)\nprint(code)`}
+        <CodeBlock language={`python`} code={`import time\nfor i in range(10):\n  print(i)\n`}
         ></CodeBlock>
         </PythonWrapper>
         </Accordion>

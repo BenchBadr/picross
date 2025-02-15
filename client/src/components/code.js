@@ -4,6 +4,7 @@ import 'katex/dist/katex.min.css';
 import { Highlight, themes } from "prism-react-renderer"
 import { PythonContext } from '../ctx/PythonContext';
 import './code.css';
+import { useGameContext } from '../ctx/GameContext';
 
 
 export const CodeBlock = ({ language, code, count=0 }) => {
@@ -15,6 +16,7 @@ export const CodeBlock = ({ language, code, count=0 }) => {
     const [fullscreen, setFullscreen] = useState(0);
     const [out, setOut] = useState(['', '']);
     const [codeContent, setCodeContent] = useState(code);
+    const {bools, lineData, progress} = useGameContext();
 
     useEffect(() => {
       if (num===count){
@@ -63,7 +65,10 @@ export const CodeBlock = ({ language, code, count=0 }) => {
 
     
     const handleRun = () => {
-      runPythonFunc(customTrim(plainCode()).replaceAll('\n> ','\n'), count);
+      let codePreset = `progress = ${progress.toString()}`
+      codePreset += `\nbools = ${JSON.stringify(bools)}`
+      console.log(codePreset)
+      runPythonFunc(codePreset + '\n' + customTrim(plainCode()).replaceAll('\n> ','\n'), count);
       // setStartTime(Date.now());
     };
 
@@ -113,6 +118,7 @@ const Highlighter = ({codeBlock, language='', lines=1, code, setCode}) => {
     )
     return (
       <div className='blockCode'>
+         <textarea onChange={(event) => setCode(event.target.value)} value={code} className='ghostarea'></textarea>
         <Highlight
           code={customTrim(code).replaceAll('\n> ','\n')}
           theme={theme==='dark' ? themes.vsDark : themes.github}
