@@ -71,7 +71,7 @@ const Grid = () => {
             <>
             <h2>Pokémon: {pokemon}</h2>
             <div>
-            <div key={-1} className="fake-cell i"></div>
+            <div key={-1} className="fake-cell"></div>
             {Array.from({ length: gridDim }).map((_, index) => (
             <div key={index} className="fake-cell i">{lineData[0][index] && lineData[0][index].join(',')}</div>
             ))}
