@@ -16,7 +16,7 @@ export const CodeBlock = ({ language, code, count=0 }) => {
     const [fullscreen, setFullscreen] = useState(0);
     const [out, setOut] = useState(['', '']);
     const [codeContent, setCodeContent] = useState(code);
-    const {bools, lineData, progress} = useGameContext();
+    const {bools, lineData, progress, gridDim} = useGameContext();
 
     useEffect(() => {
       if (num===count){
@@ -67,7 +67,7 @@ export const CodeBlock = ({ language, code, count=0 }) => {
     const handleRun = () => {
       let codePreset = `progress = ${progress.toString()}`
       codePreset += `\nbools = ${JSON.stringify(bools)}`
-      console.log(codePreset)
+      codePreset += `\ndim = ${JSON.stringify(gridDim)}`
       runPythonFunc(codePreset + '\n' + customTrim(plainCode()).replaceAll('\n> ','\n'), count);
       // setStartTime(Date.now());
     };

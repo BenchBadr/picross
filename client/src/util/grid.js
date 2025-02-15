@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useGameContext } from "../ctx/GameContext";
 import { getRandomPicture } from "./pokemon";
+import { usePython } from "react-py";
 import './grid.css';
 
 const Grid = () => {
     const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData, bools, setBools, mistakes, setMistakes, setProgress } = useGameContext();
     const [nonTrans, setNonTrans] = useState(0);
     const [countTrue, setCountTrue] = useState(0);
+    const { output }  = usePython();
 
     const dumpLineData = (data, base = '#ffffff') => {
         const regions = [];
@@ -69,6 +71,10 @@ const Grid = () => {
         fetchData();
     }, [gridDim])
 
+    useEffect(() => {
+      console.log('UPDAAAAAATE', output)
+    },[output])
+
     const clickCell = (y, x) => {
         if (bools[y][x]) return;
         setBools(prevBools => {
@@ -81,7 +87,7 @@ const Grid = () => {
             }
             return prevBools.map((row, rowIndex) =>
                 rowIndex === y
-                    ? row.map((cell, cellIndex) => (cellIndex === x ? 1 : cell))
+                    ? row.map((cell, cellIndex) => (cellIndex === x ? (data[y][x] === '#ffffff' ? 2 : 1) : cell))
                     : row
             );
         });

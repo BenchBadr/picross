@@ -31,9 +31,10 @@ const MainContent = () => {
         <Accordion title={'Use Game solver'} id={1}>
 
         <h2>Game Solver</h2>
-
+        <p>The following variables are already defined and can be used in your Python code: bools, dim, progress.</p>
+        <p>Note that a checked cell in bools is 1 by default but can be 2 if the cell is proven to be a mistake.</p>
         <PythonWrapper>
-        <CodeBlock language={`python`} code={`import time\nfor i in range(10):\n  print(i)\n`}
+        <CodeBlock language={`python`} code={`print('click',1,2)`}
         ></CodeBlock>
         </PythonWrapper>
         </Accordion>
