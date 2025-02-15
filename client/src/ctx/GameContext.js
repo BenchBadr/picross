@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const GameContext = createContext();
 
@@ -14,15 +14,10 @@ export const GameProvider = ({ children }) => {
     const [mistakes, setMistakes] = useState(0);
     const [pokemon, setPokemon] = useState(null);
     const [lineData, setLineData] = useState(null);
-
-    const addMistakes = () => {
-        setMistakes(mistakes + 1);
-        console.log('dadded mistakes',mistakes)
-    }
-
+    const [progress, setProgress] = useState(0);
 
     return (
-        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, data, setData, pokemon, setPokemon, lineData, setLineData, setBools, bools, setMistakes }}>
+        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, data, setData, pokemon, setPokemon, lineData, setLineData, setBools, bools, setMistakes, setProgress, progress }}>
             {children}
         </GameContext.Provider>
     );

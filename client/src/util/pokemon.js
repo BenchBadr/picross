@@ -47,14 +47,22 @@ async function getRandomPicture(dim) {
     }
 
     const transparency = pixelDataHexList[0][0];
+    let nonTransparentCount = 0;
     const processedPixelData = pixelDataHexList.map(row =>
-      row.map(pixel => (pixel === transparency ? '#ffffff' : pixel))
+      row.map(pixel => {
+        if (pixel !== transparency) {
+          nonTransparentCount++; 
+          return pixel;
+        }
+        return '#ffffff';
+      })
     );
 
-    return [processedPixelData, pokemon];
+
+    return [processedPixelData, pokemon, nonTransparentCount];
   } catch (error) {
     console.error("Error fetching or processing image:", error);
-    return [[], null]; 
+    return [[], null, 0]; 
   }
 }
 

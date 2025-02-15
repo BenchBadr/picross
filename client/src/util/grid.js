@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGameContext } from "../ctx/GameContext";
 import { getRandomPicture } from "./pokemon";
 import './grid.css';
 
 const Grid = () => {
-    const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData, bools, setBools, mistakes, setMistakes } = useGameContext();
+    const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData, bools, setBools, mistakes, setMistakes, setProgress } = useGameContext();
+    const [nonTrans, setNonTrans] = useState(0);
+    const [countTrue, setCountTrue] = useState(0);
 
     const dumpLineData = (data, base = '#ffffff') => {
         const regions = [];
@@ -59,6 +61,8 @@ const Grid = () => {
             setPokemon(response[1]);
             setLineData([dumpColumnData(response[0]), dumpLineData(response[0])]);
             setBools(Array.from({ length: gridDim }, () => Array.from({ length: gridDim }, () => 0)))
+            setNonTrans(response[2]);
+            setMistakes(0);
 
         }
         fetchData();
@@ -67,15 +71,18 @@ const Grid = () => {
     const clickCell = (y, x) => {
         if (bools[y][x]) return;
         setBools(prevBools => {
-            setMistakes(mistakes + 1);
+            if (data[y][x] === '#ffffff'){
+              setMistakes(mistakes + 1);
+            } else {
+              setCountTrue(countTrue + 1);
+              setProgress(Math.ceil(((countTrue+1) / nonTrans)*100))
+            }
             return prevBools.map((row, rowIndex) =>
                 rowIndex === y
                     ? row.map((cell, cellIndex) => (cellIndex === x ? true : cell))
                     : row
             );
         });
-        if (data[y][x] === '#ffffff'){
-        }
     };
     
 
