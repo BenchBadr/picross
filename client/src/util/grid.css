@@ -16,6 +16,17 @@ div.row-container:has(.cell:hover) .cell{
 .cell:hover{
     opacity:.5;
     border:5px solid red;
-    height:8px;
-    width:8px;
+    height:9px;
+    width:10px;
+}
+
+.fake-cell{
+    width:20px;
+    height:20px;
+    display: inline-block;
+}
+
+.fake-cell.i{
+    transform:rotate(315deg);
+    text-align: left;
 }

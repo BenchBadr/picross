@@ -21,8 +21,13 @@ const Grid = () => {
             <>
             <h2>Pokémon: {pokemon}</h2>
             <div>
+            <div key={-1} className="fake-cell i"></div>
+            {Array.from({ length: gridDim }).map((_, index) => (
+            <div key={index} className="fake-cell i">{index}</div>
+            ))}
             {data.map((row, y) => (
             <div style={{display:'flex'}} key={y} className="row-container">
+                <div className="fake-cell">{y}</div>
                 {row.map((pixel, x) => (
                 <div key={x} style={{background:pixel}} className="cell"></div>
                 ))}
