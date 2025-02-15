@@ -89,16 +89,16 @@ export const CodeBlock = ({ language, code, count=0 }) => {
           <Highlighter codeBlock={code} language={language} lines={1} code={codeContent} setCode={setCodeContent} />
           {canRun && isReady ?
             <div className={`code-output auto-height ${fullscreen ? 'infull' : ''}`}>
-              {out[0].split('\n').map((line, i) => (<>{line}<br/></>))}
-              <br></br>
+              {out[0].split('\n').map((line, i) => (<>{line}<br key={i}/></>))}
+              <br key='end'></br>
               <a style={{ color: 'var(--red)' }}>
               {out[1].split('\n').map((line, i) => (<>{line}<br/></>))}
               </a>
             </div>
             : null}
-             {isReady && canRun ? <a className={`fullscreen-button ${fullscreen ? 'infull' : ''}`} onClick={() => setFullscreen(!fullscreen)}>
+             {isReady && canRun ? <span className={`fullscreen-button ${fullscreen ? 'infull' : ''}`} onClick={() => setFullscreen(!fullscreen)}>
               <a className='material-icons'>{!fullscreen ? 'fullscreen' : 'fullscreen_exit'}</a>
-              </a> : null}
+              </span> : null}
         </div>
       )}
     </>

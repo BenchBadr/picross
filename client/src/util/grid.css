@@ -1,0 +1,21 @@
+.cell{
+    background:white;
+    height:18px;
+    width:18px;
+    border:1px solid grey;
+    cursor:pointer;
+    /* transition-duration:.2s; */
+}
+
+
+
+div.row-container:has(.cell:hover) .cell{
+    opacity:.8;
+}
+
+.cell:hover{
+    opacity:.5;
+    border:5px solid red;
+    height:8px;
+    width:8px;
+}
