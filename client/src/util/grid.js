@@ -63,6 +63,7 @@ const Grid = () => {
             setBools(Array.from({ length: gridDim }, () => Array.from({ length: gridDim }, () => 0)))
             setNonTrans(response[2]);
             setMistakes(0);
+            setProgress(0);
 
         }
         fetchData();
@@ -76,6 +77,7 @@ const Grid = () => {
             } else {
               setCountTrue(countTrue + 1);
               setProgress(Math.ceil(((countTrue+1) / nonTrans)*100))
+
             }
             return prevBools.map((row, rowIndex) =>
                 rowIndex === y
