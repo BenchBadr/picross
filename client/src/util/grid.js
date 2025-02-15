@@ -73,11 +73,11 @@ const Grid = () => {
             <div>
             <div key={-1} className="fake-cell i"></div>
             {Array.from({ length: gridDim }).map((_, index) => (
-            <div key={index} className="fake-cell i">{lineData[0][index].join(',')}</div>
+            <div key={index} className="fake-cell i">{lineData[0][index] && lineData[0][index].join(',')}</div>
             ))}
             {data.map((row, y) => (
             <div style={{display:'flex'}} key={y} className="row-container">
-                <div className="fake-cell">{lineData[1][y].join(',')}</div>
+                <div className="fake-cell">{lineData[1][y] && lineData[1][y].join(',')}</div>
                 {row.map((pixel, x) => (
                 <div key={x} style={{background:pixel}} className="cell" title={pixel}></div>
                 ))}
