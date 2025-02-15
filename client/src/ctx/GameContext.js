@@ -17,11 +17,12 @@ export const GameProvider = ({ children }) => {
 
     const addMistakes = () => {
         setMistakes(mistakes + 1);
+        console.log('dadded mistakes',mistakes)
     }
 
 
     return (
-        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, data, setData, pokemon, setPokemon, lineData, setLineData, setBools, bools, addMistakes }}>
+        <GameContext.Provider value={{ solver, setSolver, gridDim, setGridDim, mistakes, data, setData, pokemon, setPokemon, lineData, setLineData, setBools, bools, setMistakes }}>
             {children}
         </GameContext.Provider>
     );
