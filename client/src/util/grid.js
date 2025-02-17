@@ -71,10 +71,6 @@ const Grid = () => {
         fetchData();
     }, [gridDim])
 
-    useEffect(() => {
-      console.log('UPDAAAAAATE', output)
-    },[output])
-
     const clickCell = (y, x) => {
         if (bools[y][x]) return;
         setBools(prevBools => {

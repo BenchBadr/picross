@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { usePython, usePythonConsole } from 'react-py';
+import { useGameContext } from './GameContext';
 
 export const PythonContext = createContext(null);
 
@@ -8,6 +9,7 @@ export const PythonWrapper = ({children}) => {
   const [outputErr, setOutputErr] = useState([]);
   const [num, setNum] = useState(0);
   const { runPython, stdout, stderr, isLoading, isRunning, isReady }  = usePython();
+  const { bools, setBools } = useGameContext();
 
 
   const runPythonFunc = (code, i) => {
@@ -19,6 +21,16 @@ export const PythonWrapper = ({children}) => {
     let temp = output;
     temp[num] = stdout || '';
     setOutput(temp)
+    console.log(temp)
+    const lastLine = temp[temp.length - 1]
+    if (lastLine.startsWith('click ')) {
+      const coords = [parseInt(lastLine.split(' ')[1]), parseInt(lastLine.split(' ')[2])]
+      const temp = [...bools];
+      temp[coords[0]] = [...temp[coords[0]]];
+      temp[coords[0]][coords[1]] = 1;
+      setBools(temp);
+
+    }
   }
 
   const updateErr = () => {
