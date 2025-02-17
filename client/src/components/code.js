@@ -65,9 +65,11 @@ export const CodeBlock = ({ language, code, count=0 }) => {
 
     
     const handleRun = () => {
-      let codePreset = `progress = ${progress.toString()}`
-      codePreset += `\nbools = ${JSON.stringify(bools)}`
-      codePreset += `\ndim = ${JSON.stringify(gridDim)}`
+      let codePreset = `import time\nprogress = ${progress.toString()}`;
+      codePreset += `\nbools = ${JSON.stringify(bools)}`;
+      codePreset += `\ndim = ${JSON.stringify(gridDim)}`;
+      codePreset += `\nline_data = ${JSON.stringify(lineData)}`;
+      codePreset += '\ndef click(x,y):\n  print(f"click {x} {y}")\n  time.sleep(.1)';
       runPythonFunc(codePreset + '\n' + customTrim(plainCode()).replaceAll('\n> ','\n'), count);
       // setStartTime(Date.now());
     };

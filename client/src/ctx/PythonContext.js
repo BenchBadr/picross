@@ -21,15 +21,17 @@ export const PythonWrapper = ({children}) => {
     let temp = output;
     temp[num] = stdout || '';
     setOutput(temp)
-    console.log(temp)
-    const lastLine = temp[temp.length - 1]
-    if (lastLine.startsWith('click ')) {
-      const coords = [parseInt(lastLine.split(' ')[1]), parseInt(lastLine.split(' ')[2])]
-      const temp = [...bools];
-      temp[coords[0]] = [...temp[coords[0]]];
-      temp[coords[0]][coords[1]] = 1;
-      setBools(temp);
-
+    const lines = stdout.split('\n')
+    console.log(lines, 'lines')
+    for (const line of lines) {
+      console.log(line, 'line')
+      if (line.startsWith('click ')) {
+        const coords = [parseInt(line.split(' ')[1]), parseInt(line.split(' ')[2])]
+        const tempBools = [...bools];
+        tempBools[coords[0]] = [...tempBools[coords[0]]];
+        tempBools[coords[0]][coords[1]] = 1;
+        setBools(tempBools);
+      }
     }
   }
 

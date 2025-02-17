@@ -623,7 +623,6 @@ hypno
 plusle
 tropius
 comfey
-icon_palettes
 poipole
 trubbish
 conkeldurr
