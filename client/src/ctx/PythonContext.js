@@ -9,7 +9,7 @@ export const PythonWrapper = ({children}) => {
   const [outputErr, setOutputErr] = useState([]);
   const [num, setNum] = useState(0);
   const { runPython, stdout, stderr, isLoading, isRunning, isReady, scope }  = usePython();
-  const { bools, setBools } = useGameContext();
+  const { bools, setBools, setSolver } = useGameContext();
 
 
   const runPythonFunc = (code, i) => {
@@ -27,7 +27,7 @@ export const PythonWrapper = ({children}) => {
     temp[num] = stdout || '';
     setOutput(temp)
     const lines = stdout.split('\n')
-    console.log(lines, 'lines', 'HERE')
+
     for (const line of lines) {
       if (line.startsWith('bools ')) {
         // const coords = [parseInt(line.split(' ')[1]), parseInt(line.split(' ')[2])]
@@ -36,6 +36,9 @@ export const PythonWrapper = ({children}) => {
         // tempBools[coords[0]][coords[1]] = 1;
         // setBools(tempBools);
         setBools(JSON.parse(line.split(' ').slice(1).join('')))
+      }
+      if (line.startsWith('end')){
+        setSolver(2)
       }
     }
   }

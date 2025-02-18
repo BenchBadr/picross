@@ -69,8 +69,7 @@ export const CodeBlock = ({ language, code, count=0 }) => {
       codePreset += `\nbools = ${JSON.stringify(bools)}`;
       codePreset += `\ndim = ${JSON.stringify(gridDim)}`;
       codePreset += `\nline_data = ${JSON.stringify(lineData)}`;
-      codePreset += '\ndef click(bools):\n  print(f"bools {bools}")\n  time.sleep(.2)\n';
-      console.log(codePreset)
+      codePreset += `\ndef click(bools):\n  print(f"bools {bools}")\n  time.sleep(${1/(gridDim)})\n`;
       runPythonFunc(codePreset + '\n' + customTrim(plainCode()).replaceAll('\n> ','\n'), count);
       // setStartTime(Date.now());
     };

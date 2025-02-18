@@ -104,7 +104,7 @@ const Grid = () => {
             <div style={{display:'flex'}} key={y} className="row-container">
                 <div className="fake-cell">{lineData[1][y] && lineData[1][y].join(',')}</div>
                 {row.map((pixel, x) => (
-                <div key={x} style={{background:!bools[y][x] ? 'orange' : pixel, color:'red'}} className="cell" title={pixel} onClick={() => clickCell(y,x)}>{bools[y][x] && pixel === '#ffffff' ? '' : ''}</div>
+                <div key={x} style={{background:!bools[y][x] ? 'orange' : pixel}} className="cell" title={pixel} onClick={() => clickCell(y,x)}>{bools[y][x] && pixel === '#ffffff' ? '' : ''}</div>
                 ))}
             </div>
             ))}
