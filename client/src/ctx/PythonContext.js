@@ -8,7 +8,7 @@ export const PythonWrapper = ({children}) => {
   const [output, setOutput] = useState([]);
   const [outputErr, setOutputErr] = useState([]);
   const [num, setNum] = useState(0);
-  const { runPython, stdout, stderr, isLoading, isRunning, isReady }  = usePython();
+  const { runPython, stdout, stderr, isLoading, isRunning, isReady, scope }  = usePython();
   const { bools, setBools } = useGameContext();
 
 
@@ -17,20 +17,25 @@ export const PythonWrapper = ({children}) => {
     runPython(code)
   }
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+
   const updateOut = () => {
     let temp = output;
     temp[num] = stdout || '';
     setOutput(temp)
     const lines = stdout.split('\n')
-    console.log(lines, 'lines')
+    console.log(lines, 'lines', 'HERE')
     for (const line of lines) {
-      console.log(line, 'line')
-      if (line.startsWith('click ')) {
-        const coords = [parseInt(line.split(' ')[1]), parseInt(line.split(' ')[2])]
-        const tempBools = [...bools];
-        tempBools[coords[0]] = [...tempBools[coords[0]]];
-        tempBools[coords[0]][coords[1]] = 1;
-        setBools(tempBools);
+      if (line.startsWith('bools ')) {
+        // const coords = [parseInt(line.split(' ')[1]), parseInt(line.split(' ')[2])]
+        // const tempBools = [...bools];
+        // tempBools[coords[0]] = [...tempBools[coords[0]]];
+        // tempBools[coords[0]][coords[1]] = 1;
+        // setBools(tempBools);
+        setBools(JSON.parse(line.split(' ').slice(1).join('')))
       }
     }
   }

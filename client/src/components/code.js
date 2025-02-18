@@ -12,7 +12,7 @@ export const CodeBlock = ({ language, code, count=0 }) => {
     const [isCopied, setIsCopied] = useState(false);
     const canRun = ['py', 'python'].includes(language);
     const pythonValue = useContext(PythonContext);
-    const { runPythonFunc, isLoading, isRunning, isReady, output, num, setNum, outputErr, stderr, stdout } = pythonValue || [null, null, null, null, null, null, null]
+    const { runPythonFunc, isLoading, isRunning, isReady, output, num, setNum, outputErr, stderr, stdout, scope } = pythonValue || [null, null, null, null, null, null, null]
     const [fullscreen, setFullscreen] = useState(0);
     const [out, setOut] = useState(['', '']);
     const [codeContent, setCodeContent] = useState(code);
@@ -69,7 +69,8 @@ export const CodeBlock = ({ language, code, count=0 }) => {
       codePreset += `\nbools = ${JSON.stringify(bools)}`;
       codePreset += `\ndim = ${JSON.stringify(gridDim)}`;
       codePreset += `\nline_data = ${JSON.stringify(lineData)}`;
-      codePreset += '\ndef click(x,y):\n  print(f"click {x} {y}")\n  time.sleep(.1)';
+      codePreset += '\ndef click(bools):\n  print(f"bools {bools}")\n  time.sleep(.2)\n';
+      console.log(codePreset)
       runPythonFunc(codePreset + '\n' + customTrim(plainCode()).replaceAll('\n> ','\n'), count);
       // setStartTime(Date.now());
     };
@@ -118,9 +119,16 @@ const Highlighter = ({codeBlock, language='', lines=1, code, setCode}) => {
     const customTrim = () => (
       code
     )
+
+    const handleChange = (event) => {
+      setCode(event.target.value);
+      event.target.style.height = 'inherit'; 
+    const scrollHeight = event.target.scrollHeight;
+    event.target.style.height = scrollHeight + 'px';
+    }
     return (
       <div className='blockCode'>
-         <textarea onChange={(event) => setCode(event.target.value)} value={code} className='ghostarea'></textarea>
+         <textarea onChange={handleChange} value={code} className='ghostarea'></textarea>
         <Highlight
           code={customTrim(code).replaceAll('\n> ','\n')}
           theme={theme==='dark' ? themes.vsDark : themes.github}
@@ -129,14 +137,16 @@ const Highlighter = ({codeBlock, language='', lines=1, code, setCode}) => {
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre style={{...style, background:'transparent'}}>
               {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })} style={{paddingLeft:'40px'}} className={code.split('\n')[i].startsWith(`> `) ? `selectedLine` : ''}
+                <div key={i} {...getLineProps({ line })} style={{paddingLeft:'40px', overflowX:'scroll', maxWidth:'calc(100% - 60px)', whiteSpace:'normal !important'}} className={code.split('\n')[i].startsWith(`> `) ? `selectedLine` : ''}
                 >
                   {lines ? <a className='line-display'
                   style={{borderTopLeftRadius:[0,'1rem'][i===0],borderBottomLeftRadius:[0,'1rem'][i==tokens.length-1]}}
                   >{i + 1}</a> : null}
+                  <div>
                   {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
+                    <span key={key} {...getTokenProps({ token })}/>
                   ))}
+                  </div>
                 </div>
               ))}
             </pre>

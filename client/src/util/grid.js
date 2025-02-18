@@ -5,10 +5,9 @@ import { usePython } from "react-py";
 import './grid.css';
 
 const Grid = () => {
-    const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData, bools, setBools, mistakes, setMistakes, setProgress } = useGameContext();
+    const { data, setData, gridDim, setPokemon, pokemon, lineData, setLineData, bools, setBools, mistakes, setMistakes, setProgress, solver } = useGameContext();
     const [nonTrans, setNonTrans] = useState(0);
     const [countTrue, setCountTrue] = useState(0);
-    const { output }  = usePython();
 
     const dumpLineData = (data, base = '#ffffff') => {
         const regions = [];
@@ -72,7 +71,7 @@ const Grid = () => {
     }, [gridDim])
 
     const clickCell = (y, x) => {
-        if (bools[y][x]) return;
+        if (bools[y][x] || solver) return;
         setBools(prevBools => {
             if (data[y][x] === '#ffffff'){
               setMistakes(mistakes + 1);
@@ -105,7 +104,7 @@ const Grid = () => {
             <div style={{display:'flex'}} key={y} className="row-container">
                 <div className="fake-cell">{lineData[1][y] && lineData[1][y].join(',')}</div>
                 {row.map((pixel, x) => (
-                <div key={x} style={{background:!bools[y][x] ? 'orange' : pixel, color:'red'}} className="cell" title={pixel} onClick={() => clickCell(y,x)}>{bools[y][x] && pixel === '#ffffff' ? 'X' : ''}</div>
+                <div key={x} style={{background:!bools[y][x] ? 'orange' : pixel, color:'red'}} className="cell" title={pixel} onClick={() => clickCell(y,x)}>{bools[y][x] && pixel === '#ffffff' ? '' : ''}</div>
                 ))}
             </div>
             ))}

@@ -366,7 +366,16 @@ code{
   white-space:wrap;
   margin-left:38px;
   margin-top:10px;
-  width:100%;
+  width:calc(100% - 50px);
   overflow-x: scroll;
-  white-space: pre;
+  white-space: normal;
+  height: auto;
+  font-weight: 400 !important;
+  font-family: Consolas, monospace;
+}
+
+.code-line, .code-line *{
+  width:50px !important;
+  white-space: wrap;
+  font-weight: 400 !important;
 }
